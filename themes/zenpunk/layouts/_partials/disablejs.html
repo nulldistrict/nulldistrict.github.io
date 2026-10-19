@@ -11,7 +11,7 @@
   <p><a href="https://disable-javascript.org">detaylar için tık tık.</a></p>
   <p class="disablejs-hint" data-close-hint>Bu uyarıyı 3 saniye sonra kapatabilirsin.</p>
 </dialog>
-{{ with resources.Get "js/disablejs.js" }}
+{{ with resources.Get "js/disablejs.js" | fingerprint }}
 <script src="{{ .RelPermalink }}" defer></script>
 {{ end }}
 {{ end }}

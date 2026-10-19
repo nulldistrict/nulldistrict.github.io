@@ -2,7 +2,7 @@
 {{- with $text -}}
   {{- $qr := images.QR . -}}
   <figure class="qr-code">
-    <img src="{{ $qr.RelPermalink }}" width="160" height="160" alt="QR" loading="lazy">
+    <img src="{{ ($qr | fingerprint).RelPermalink }}" width="160" height="160" alt="QR" loading="lazy">
   </figure>
 {{- else -}}
   {{- errorf "qr shortcode requires text: %s" .Position -}}

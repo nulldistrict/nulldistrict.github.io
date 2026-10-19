@@ -27,7 +27,7 @@
       {{ $qr := images.QR .Permalink }}
 
       <img
-        src="{{ $qr.RelPermalink }}"
+        src="{{ ($qr | fingerprint).RelPermalink }}"
         width="{{ $qr.Width }}"
         height="{{ $qr.Height }}"
         alt="QR code for {{ .Title }}"

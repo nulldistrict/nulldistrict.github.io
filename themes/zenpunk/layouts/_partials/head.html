@@ -8,7 +8,7 @@
 {{ partial "seo.html" . }}
 <link rel="shortcut icon" href="{{ "favicon.ico" | relURL }}?v=black-circle-1">
 
-{{ with resources.Get "css/main.css" }}
+{{ with resources.Get "css/main.css" | fingerprint }}
 <link
     rel="stylesheet"
     href="{{ .RelPermalink }}"

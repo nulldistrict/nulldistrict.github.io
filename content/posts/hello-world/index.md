@@ -3,7 +3,7 @@ date = '2026-10-17T21:36:16+03:00'
 draft = false
 title = 'Merhaba Dünya?!'
 cover = 'cover.webp'
-description = 'Yeni başlangıçlar.'
+description = 'Null Districtdeki ilk yazı.'
 slug = 'hello-world'
 collection = "journal"
 +++

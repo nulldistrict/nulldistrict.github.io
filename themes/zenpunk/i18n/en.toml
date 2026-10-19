@@ -1,0 +1,24 @@
+[languages]
+other = "Other languages"
+[likedPost]
+other = "Did you enjoy this post?"
+[supportWork]
+other = "Consider supporting my work."
+[published]
+other = "published"
+[updated]
+other = "updated"
+[inCollection]
+other = "collection"
+[tags]
+other = "tags:"
+[notFoundIntro]
+other = "You may have followed an outdated link or entered an address that no longer exists. Sorry about that."
+[notFoundHelp]
+other = "The content may have moved or been removed. If you typed the address yourself, try checking it for mistakes."
+[searchHelp]
+other = "You can try finding the page with a search engine by adding this to your search:"
+[example]
+other = "For example:"
+[backHome]
+other = "Return to the home page"

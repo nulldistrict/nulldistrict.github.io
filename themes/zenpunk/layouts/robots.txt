@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: {{ strings.TrimRight "/" (site.Params.canonicalBaseURL | default site.BaseURL) }}/sitemap.xml

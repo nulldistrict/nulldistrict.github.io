@@ -1,0 +1,3 @@
+<div class="ascii-art">
+  <pre tabindex="0" role="img" aria-label="{{ .Get "label" | default "ASCII art" }}">{{ .Inner | strings.Trim "\r\n" }}</pre>
+</div>

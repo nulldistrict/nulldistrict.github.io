@@ -1,0 +1,6 @@
+{{ with site.GetPage "/support" }}
+<div class="support-callout">
+    {{ i18n "likedPost" }}
+    <a href="{{ .RelPermalink }}">{{ i18n "supportWork" }}</a>
+</div>
+{{ end }}

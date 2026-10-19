@@ -1,0 +1,28 @@
+<meta charset="utf-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+>
+
+{{ partial "seo.html" . }}
+<link rel="shortcut icon" href="{{ "favicon.ico" | relURL }}?v=black-circle-1">
+
+{{ with resources.Get "css/main.css" }}
+<link
+    rel="stylesheet"
+    href="{{ .RelPermalink }}"
+>
+{{ end }}
+
+{{ $language := site.Language }}
+{{ $title := site.Title }}
+{{ with site.Home.OutputFormats.Get "RSS" }}
+<link
+    rel="alternate"
+    type="{{ .MediaType.Type }}"
+    href="{{ .RelPermalink }}"
+    title="{{ $title }} — {{ $language.Label }}"
+    hreflang="{{ $language.Locale }}"
+>
+{{ end }}

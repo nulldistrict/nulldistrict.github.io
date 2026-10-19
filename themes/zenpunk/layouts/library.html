@@ -1,0 +1,56 @@
+{{ define "main" }}
+
+<section class="library">
+
+    <h1>{{ .Title }}</h1>
+
+    <div class="library-list">
+
+        {{ range site.Data.books.books }}
+
+        <a
+            class="book-card"
+            href="{{ .url }}"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+
+            <article class="book">
+
+                <div class="book-info">
+
+                    <h2 class="book-title">
+                        {{ .title }}
+                    </h2>
+
+                    <p class="book-description">
+                        {{ .description }}
+                    </p>
+
+                    <p class="book-author">
+                        — {{ .author }}
+                    </p>
+
+                </div>
+
+                <div class="book-cover">
+
+                    <img
+                        src="{{ .cover }}"
+                        alt="{{ .title }} cover"
+                        loading="lazy"
+                    >
+
+                </div>
+
+            </article>
+
+        </a>
+
+        {{ end }}
+
+    </div>
+
+</section>
+
+{{ end }}

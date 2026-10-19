@@ -1,0 +1,1153 @@
+/* ---------------------------------------------------------
+   zenpunk
+   intentionally simple, fixed-width website
+   --------------------------------------------------------- */
+
+@font-face {
+    font-family: "IBM Plex Mono";
+    src: url("/fonts/ibm-plex-mono/IBMPlexMono-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "IBM Plex Mono";
+    src: url("/fonts/ibm-plex-mono/IBMPlexMono-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "IBM Plex Mono";
+    src: url("/fonts/ibm-plex-mono/IBMPlexMono-SemiBold.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    color-scheme: dark;
+    --background: #1c1c1c;
+    --foreground: #ffffff;
+    --accent: #e00712;
+    --sand: #cfa36e;
+    --error: #ff6b72;
+    --muted: #aaa8a1;
+    --border: #3b3530;
+    --surface: #151515;
+    --on-accent: #ffffff;
+    --code-background: #050606;
+    --code-foreground: #e8e5dc;
+    --code-border: #655b50;
+    --code-border-width: 2px;
+
+    --content-width: 720px;
+    --page-gutter: 55px;
+
+    --font-mono:
+        "IBM Plex Mono",
+        "Cascadia Mono",
+        Consolas,
+        monospace;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        color-scheme: light;
+        --background: #f7f7f5;
+        --foreground: #1c1c1c;
+        --sand: #806039;
+        --error: #b4232c;
+        --muted: #626262;
+        --border: #d8d3cd;
+        --surface: #eeedea;
+        --code-background: #ebebeb;
+        --code-foreground: #1c1c1c;
+        --code-border: #a3a3a3;
+        --code-border-width: 2px 0 0 2px;
+    }
+}
+
+/* ---------------------------------------------------------
+   BASE
+   --------------------------------------------------------- */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    background: var(--background);
+}
+
+body {
+    width: min(100%, calc(var(--content-width) + 2 * var(--page-gutter)));
+
+    margin: 0;
+    padding: 48px var(--page-gutter) 80px;
+    overflow-wrap: anywhere;
+
+    background: var(--background);
+    color: var(--foreground);
+
+    font-family: var(--font-mono);
+
+    font-size: 16px;
+    line-height: 1.65;
+
+    font-weight: 500;
+}
+
+/* ---------------------------------------------------------
+   TEXT
+   --------------------------------------------------------- */
+
+p {
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+}
+
+strong,
+b {
+    font-weight: 700;
+}
+
+em,
+i {
+    font-style: italic;
+}
+
+small {
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+/* ---------------------------------------------------------
+   LINKS
+   --------------------------------------------------------- */
+
+a {
+    color: var(--foreground);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+
+a:visited {
+    color: var(--foreground);
+}
+
+a:hover {
+    background: var(--accent);
+    color: var(--on-accent);
+    text-decoration: none;
+}
+
+a:focus {
+    outline: 1px dashed var(--foreground);
+    outline-offset: 3px;
+}
+
+/* Links that wrap larger visual blocks should not invert. */
+.post-card-image:hover,
+.book-card:hover {
+    background: transparent;
+    color: inherit;
+}
+
+/* ---------------------------------------------------------
+   HEADINGS
+   --------------------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0;
+    color: var(--foreground);
+    font-family: inherit;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+h1 {
+    margin-bottom: 2rem;
+    font-size: 2.2rem;
+}
+
+h2 {
+    margin-top: 2.75rem;
+    margin-bottom: 1rem;
+
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+h4,
+h5,
+h6 {
+    font-size: 0.95rem;
+}
+
+/* ---------------------------------------------------------
+   SITE HEADER
+   --------------------------------------------------------- */
+
+.site-header {
+    width: 100%;
+    margin: 0 0 100px 0;
+    padding: 0 0 45px 0;
+    border-bottom: 1px solid var(--accent);
+}
+
+.site-header.site-header-compact {
+    margin-bottom: 2rem;
+}
+
+.site-title {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+
+    color: var(--foreground);
+
+    font-family:
+        "IBM Plex Mono",
+        "Noto Sans CJK SC",
+        "Noto Sans CJK JP",
+        monospace;
+
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+}
+
+.site-title-main {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+.site-title-sub {
+    display: block;
+    margin-top: 0.15rem;
+
+    color: var(--muted);
+
+    font-size: 0.55rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.site-title,
+.site-title:visited,
+.site-title:hover {
+    color: var(--accent);
+    background: transparent;
+}
+
+/* ---------------------------------------------------------
+   NAVIGATION
+   --------------------------------------------------------- */
+
+.site-navigation {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 24px;
+    row-gap: 5px;
+    align-items: start;
+    max-width: 100%;
+}
+
+.site-navigation a {
+    display: block;
+    width: max-content;
+    line-height: 1.45;
+}
+
+.nav-bracket {
+    color: var(--accent);
+}
+
+.language-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    font-size: 0.85rem;
+}
+
+.site-navigation a:hover .nav-bracket {
+    color: var(--on-accent);
+}
+
+.nav-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* ---------------------------------------------------------
+   MAIN
+   --------------------------------------------------------- */
+
+main {
+    width: 100%;
+}
+
+/* ---------------------------------------------------------
+   GENERIC PAGE
+   --------------------------------------------------------- */
+
+.page {
+    width: 100%;
+}
+
+.page-header {
+    margin-bottom: 2.5rem;
+}
+
+.page-header h1 {
+    margin-bottom: 0.75rem;
+}
+
+.page-description {
+    color: var(--muted);
+}
+
+.page-content {
+    width: 100%;
+}
+
+/* ---------------------------------------------------------
+   HOME
+   --------------------------------------------------------- */
+
+.home {
+    width: 100%;
+}
+
+.home > :first-child {
+    margin-top: 0;
+}
+
+.home-intro {
+    margin-bottom: 4rem;
+}
+
+.ascii-art {
+    margin-block: 2rem;
+}
+
+/* Reusable text artwork: preserve its spacing without decorative framing. */
+.ascii-art pre {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--foreground);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: 0;
+    white-space: pre;
+    overflow-x: auto;
+}
+
+.ascii-art pre:focus-visible {
+    outline: 1px dashed var(--foreground);
+    outline-offset: 4px;
+}
+
+.home-intro > :first-child {
+    margin-top: 0;
+}
+
+.home-intro > :last-child {
+    margin-bottom: 0;
+}
+
+.home section {
+    margin-bottom: 3rem;
+}
+
+.home h2 {
+    font-size: 1rem;
+}
+
+.home img {
+    width: 100%;
+    filter: grayscale(100%);
+}
+
+.home img:hover {
+    filter: grayscale(0%);
+}
+
+/* The footer QR stays in its original colors. */
+.home .footer-share img {
+    filter: none;
+}
+
+/* ---------------------------------------------------------
+   JOURNAL / ARTICLE
+   --------------------------------------------------------- */
+
+article {
+    width: 100%;
+}
+
+article header {
+    margin-bottom: 2rem;
+}
+
+article time,
+.meta,
+.article-date {
+    color: var(--sand);
+    font-size: 0.75rem;
+}
+
+article img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin: 1rem 0;
+}
+
+/* ---------------------------------------------------------
+   ARTICLE LIST
+   --------------------------------------------------------- */
+
+/* Compact previews shared by the homepage and collection pages. */
+.post-card {
+    margin-bottom: 4rem;
+    font-weight: 400;
+}
+
+.post-card-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+    margin-bottom: 0.65rem;
+}
+
+.post-card-title {
+    min-width: 0;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.post-card-date {
+    flex-shrink: 0;
+    margin-left: auto;
+    color: var(--sand);
+    font-size: 0.7rem;
+    white-space: nowrap;
+}
+
+.post-card-image {
+    display: block;
+}
+
+.post-card-image img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    margin: 0;
+}
+
+.post-card-description {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.8rem;
+    line-height: 1.8;
+}
+
+.post-card-image + .post-card-description {
+    margin-top: 0.75rem;
+}
+
+.home .post-card:focus-within .post-card-image img {
+    filter: grayscale(0%);
+}
+
+.post-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.post-list li {
+    margin-bottom: 3.5rem;
+}
+
+.post-list-title {
+    margin-bottom: 0.25rem;
+    font-size: 1.05rem;
+}
+
+.post-list-date {
+    float: right;
+    color: var(--sand);
+    font-size: 0.75rem;
+}
+
+.post-list img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.post-list-description {
+    color: var(--muted);
+}
+
+/* ---------------------------------------------------------
+   SUPPORT CALLOUT
+   --------------------------------------------------------- */
+
+.support-callout {
+    margin: 3rem 0 2.75rem 0;
+    padding: 0.9rem 1.1rem;
+
+    border: 1px solid var(--accent);
+
+    background: transparent;
+    color: var(--foreground);
+
+    font-size: 0.8rem;
+    line-height: 1.55;
+}
+
+.support-callout a {
+    font-weight: 600;
+}
+
+/* ---------------------------------------------------------
+   POST META FOOTER
+   --------------------------------------------------------- */
+
+.post-meta-footer {
+    color: var(--sand);
+    margin: 0;
+    padding: 2.75rem 0;
+
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.65;
+}
+
+.post-meta-footer p {
+    margin: 0;
+}
+
+.post-meta-footer time {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+
+    color: inherit;
+
+    white-space: nowrap;
+}
+
+.post-meta-footer a {
+    font-family: inherit;
+    font-weight: 600;
+}
+
+/* ---------------------------------------------------------
+   POST HEADER
+   --------------------------------------------------------- */
+
+.post-header {
+    margin-bottom: 1.5rem;
+}
+
+.post-title {
+    margin-bottom: 0.75rem;
+}
+
+.post-description {
+    margin: 0;
+
+    font-size: 1.08rem;
+    line-height: 1.6;
+
+    color: var(--foreground);
+}
+
+.post-cover {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    margin: 1.5rem 0 2rem 0;
+}
+
+.post-content {
+    font-size: 1rem;
+    line-height: 1.65;
+}
+
+/* ---------------------------------------------------------
+   IMAGES
+   --------------------------------------------------------- */
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+figure {
+    margin: 2rem 0;
+}
+
+figcaption {
+    margin-top: 0.5rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+.qr-code img {
+    width: 160px;
+    height: auto;
+    filter: none;
+}
+
+h2 + .qr-code,
+h3 + .qr-code {
+    margin-top: 0.75rem;
+}
+
+/* ---------------------------------------------------------
+   BLOCKQUOTE / NOTES
+
+   Markdown example:
+   > **Note:** Some information here.
+   --------------------------------------------------------- */
+
+blockquote {
+    margin: 1.5rem 0;
+    padding: 0.75rem 0.9rem;
+
+    border: 1px solid var(--border);
+
+    background: var(--surface);
+    color: var(--foreground);
+
+    font-style: normal;
+}
+
+blockquote p {
+    margin: 0;
+}
+
+blockquote strong {
+    font-weight: 700;
+}
+
+/* ---------------------------------------------------------
+   CODE
+   --------------------------------------------------------- */
+
+code,
+pre {
+    font-family: var(--font-mono);
+}
+
+/* Inline code: `clinfo -l` */
+:not(pre) > code {
+    padding: 0.05rem 0.25rem;
+
+    border: 2px solid var(--code-foreground);
+
+    background: transparent;
+    color: var(--code-foreground);
+
+    font-size: 0.92em;
+}
+
+/* Fenced code / command blocks */
+pre {
+    overflow-x: auto;
+
+    margin: 1.5rem 0 2.75rem;
+    padding: 0.65rem;
+
+    border-style: solid;
+    border-color: var(--code-border);
+    border-width: var(--code-border-width);
+
+    background: var(--code-background);
+    color: var(--code-foreground);
+
+    font-size: 0.92rem;
+    line-height: 1.35;
+}
+
+pre code {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+}
+
+/* ---------------------------------------------------------
+   HORIZONTAL RULE
+   --------------------------------------------------------- */
+
+hr {
+    height: 0;
+    margin: 3rem 0;
+    border: 0;
+    border-top: 1px solid var(--border);
+}
+
+/* ---------------------------------------------------------
+   LISTS
+   --------------------------------------------------------- */
+
+ul,
+ol {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+li {
+    margin-bottom: 0.25rem;
+}
+
+/* ---------------------------------------------------------
+   TABLE
+   --------------------------------------------------------- */
+
+table {
+    width: 100%;
+    margin: 1.5rem 0;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+thead {
+    text-align: left;
+}
+
+th {
+    padding: 7px 9px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 700;
+    text-align: left;
+    vertical-align: top;
+}
+
+td {
+    padding: 9px;
+    border: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+}
+
+th:first-child,
+td:first-child {
+    padding-left: 9px;
+}
+
+/* ---------------------------------------------------------
+   DETAILS / FAQ
+   --------------------------------------------------------- */
+
+details {
+    margin-bottom: 1.5rem;
+}
+
+summary {
+    cursor: pointer;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+details > *:not(summary) {
+    margin-left: 1rem;
+}
+
+/* ---------------------------------------------------------
+   LIBRARY
+   --------------------------------------------------------- */
+
+.library {
+    width: 100%;
+}
+
+.library > h1 {
+    margin-bottom: 3rem;
+}
+
+.library-list {
+    display: block;
+}
+
+.book-card {
+    display: block;
+    width: 100%;
+    margin: 0 0 38px 0;
+    color: inherit;
+    text-decoration: none;
+}
+
+.book {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 238px;
+    width: 100%;
+    min-height: 172px;
+    margin: 0;
+    background: transparent;
+}
+
+.book-info {
+    padding: 28px 24px 24px 24px;
+}
+
+.book-title {
+    margin: 0 0 17px 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.book-description {
+    margin: 0 0 15px 0;
+    line-height: 1.55;
+}
+
+.book-author {
+    margin: 0;
+    font-weight: 600;
+}
+
+.book-cover {
+    width: 238px;
+    height: 172px;
+    overflow: hidden;
+    background: #eee;
+}
+
+.book-cover img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    object-fit: contain;
+    background: #eee;
+}
+
+.book-card:hover .book-title {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+}
+
+/* ---------------------------------------------------------
+   BOOKMARKS
+   --------------------------------------------------------- */
+
+.bookmarks {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.bookmarks li {
+    margin-bottom: 0.6rem;
+}
+
+/* ---------------------------------------------------------
+   FOOTER
+   --------------------------------------------------------- */
+
+.site-footer {
+    width: 100%;
+    margin-top: 3rem;
+    color: var(--foreground);
+    font-size: 0.8rem;
+}
+
+.site-footer p {
+    margin: 0;
+}
+
+.footer-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+
+    padding: 0 0 2.5rem 0;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+}
+
+.footer-links a {
+    width: max-content;
+    max-width: 100%;
+    font-weight: 600;
+}
+
+.footer-share {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+}
+
+.footer-share strong {
+    font-weight: 600;
+}
+
+.footer-share img {
+    display: block;
+    width: 120px;
+    height: 120px;
+    margin: 0;
+    filter: none;
+    image-rendering: pixelated;
+}
+
+/* ---------------------------------------------------------
+   SELECTION
+   --------------------------------------------------------- */
+
+::selection {
+    background: var(--accent);
+    color: var(--on-accent);
+}
+
+::-moz-selection {
+    background: var(--accent);
+    color: var(--on-accent);
+}
+
+/* ---------------------------------------------------------
+   CURSOR EFFECT
+   --------------------------------------------------------- */
+
+.page-header h1::after,
+.library > h1::after,
+.collection > h1::after {
+    content: "█";
+    margin-left: 0.15em;
+    animation: cursor-blink 1s steps(1) infinite;
+}
+
+@keyframes cursor-blink {
+    0%,
+    50% {
+        opacity: 1;
+    }
+
+    51%,
+    100% {
+        opacity: 0;
+    }
+}
+
+/* ---------------------------------------------------------
+   RESPONSIVE LAYOUT
+   --------------------------------------------------------- */
+
+
+pre {
+    max-width: 100%;
+    overflow-wrap: normal;
+}
+
+table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+@media (max-width: 720px) {
+    body {
+        padding: 24px 20px 48px;
+        font-size: 15px;
+    }
+
+    .site-header {
+        margin-bottom: 40px;
+        padding-bottom: 24px;
+    }
+
+    .site-navigation {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 20px;
+        row-gap: 8px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    .post-card-title {
+        font-size: 1rem;
+    }
+
+    .book {
+        grid-template-columns: minmax(0, 1fr) 105px;
+        min-height: 120px;
+    }
+
+    .book-info {
+        padding: 12px 12px 12px 0;
+    }
+
+    .book-title {
+        margin-bottom: 10px;
+    }
+
+    .book-description,
+    .book-author {
+        font-size: 0.9rem;
+    }
+
+    .book-cover {
+        width: 105px;
+        height: 150px;
+    }
+
+    .footer-main {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 1rem;
+    }
+
+    .footer-share img {
+        width: 96px;
+        height: 96px;
+    }
+}
+
+@media (max-width: 380px) {
+    body {
+        padding-inline: 14px;
+    }
+
+    .book {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .book-cover {
+        grid-row: 1;
+    }
+}
+
+#disablejs {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100vh;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: clamp(1rem, 2.5vw, 2.5rem);
+    overflow-y: auto;
+    background: var(--background);
+    background: color-mix(in srgb, var(--background) 94%, transparent);
+    color: var(--foreground);
+    border: 0;
+    border-top: 3px solid var(--accent);
+    font: inherit;
+    overflow-wrap: anywhere;
+    overscroll-behavior: contain;
+}
+
+#disablejs::backdrop {
+    background: rgb(0 0 0 / 25%);
+}
+
+body:has(#disablejs[open]) {
+    overflow: hidden;
+}
+
+.disablejs-hint {
+    color: var(--sand);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+.not-found {
+    padding: 1rem 0 2.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.not-found-header {
+    margin-bottom: 2.5rem;
+}
+
+.not-found h1 {
+    margin: 0;
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    font-weight: 400;
+}
+
+.not-found-cursor {
+    color: var(--muted);
+    animation: cursor-blink 1s steps(1) infinite;
+}
+
+.not-found-intro {
+    margin-bottom: 3.5rem;
+    font-size: 1.1rem;
+}
+
+.not-found > :last-child {
+    margin-bottom: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .not-found-cursor,
+    .page-header h1::after,
+    .library > h1::after,
+    .collection > h1::after {
+        animation: none;
+    }
+}

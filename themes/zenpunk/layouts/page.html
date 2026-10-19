@@ -1,0 +1,96 @@
+{{ define "main" }}
+
+{{ if eq .Section "posts" }}
+
+<article class="post-page">
+
+  <header class="post-header">
+
+    <h1 class="post-title">
+      {{ .Title }}
+    </h1>
+
+    {{ with .Params.description }}
+      <p class="post-description">
+        {{ . }}
+      </p>
+    {{ end }}
+
+  </header>
+
+
+  {{ with .Resources.GetMatch .Params.cover }}
+
+    <img
+      class="post-cover"
+      src="{{ .RelPermalink }}"
+      alt="{{ $.Title }}"
+    >
+
+  {{ end }}
+
+
+  <div class="post-content">
+    {{ .Content }}
+  </div>
+
+
+  {{ partial "support-callout.html" . }}
+
+<div class="post-meta-footer">
+  <p>
+
+    <time datetime="{{ .Date.Format "2006-01-02" }}">
+      {{ .Date.Format "02-01-2006" }}
+    </time>
+    {{ i18n "published" }}
+
+    {{ with .Params.lastmod }}
+      ·
+      <time datetime="{{ (time.AsTime .).Format "2006-01-02" }}">
+        {{ (time.AsTime .).Format "02-01-2006" }}
+      </time>
+      {{ i18n "updated" }}
+    {{ end }}
+
+    {{ with .Params.collection }}
+      {{ with site.GetPage (printf "/collections/%s" (. | urlize)) }}
+      ·
+      <a href="{{ .RelPermalink }}">
+        {{ .Title }}
+      </a>
+      {{ i18n "inCollection" }}
+      {{ end }}
+    {{ end }}
+
+    {{ with .GetTerms "tags" }}
+      · {{ i18n "tags" }}
+      {{ range $index, $tag := . }}
+        {{ if $index }}, {{ end }}
+        <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+      {{ end }}
+    {{ end }}
+
+  </p>
+</div>
+
+</article>
+
+
+{{ else }}
+
+<article class="page">
+
+  <header class="page-header">
+    <h1>{{ .Title }}</h1>
+  </header>
+
+  <div class="page-content">
+    {{ .Content }}
+  </div>
+
+</article>
+
+{{ end }}
+
+{{ end }}

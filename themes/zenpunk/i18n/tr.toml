@@ -1,0 +1,24 @@
+[languages]
+other = "Diğer diller"
+[likedPost]
+other = "Bu yazıyı beğendin mi?"
+[supportWork]
+other = "Çalışmalarımı desteklemeyi düşünebilirsin."
+[published]
+other = "tarihinde yayınlandı"
+[updated]
+other = "tarihinde güncellendi"
+[inCollection]
+other = "koleksiyonunda"
+[tags]
+other = "etiketler:"
+[notFoundIntro]
+other = "Sanırım yanlış bir adrese geldin ya da artık var olmayan bir sayfaya uğradın. Üzgünüm :'("
+[notFoundHelp]
+other = "Aradığın içerik başka bir adrese taşınmış veya kaldırılmış olabilir. Bağlantıyı elle yazdıysan adresi kontrol etmeyi deneyebilirsin."
+[searchHelp]
+other = "Bir arama motorunda, aradığın konuya şu ifadeyi ekleyerek sayfayı bulmayı deneyebilirsin:"
+[example]
+other = "Örneğin:"
+[backHome]
+other = "Ana sayfaya dön"

@@ -1,0 +1,17 @@
+{{ if site.Params.enableDisableJsDemo }}
+<dialog id="disablejs" lang="tr" aria-label="JavaScript hakkında" data-icon-base="{{ "images/disablejs/" | relURL }}">
+  <p tabindex="-1" autofocus class="disablejs-hint" role="status" aria-live="polite" data-close-hint>Bu uyarıyı 3 saniye sonra kapatabilirsin.</p>
+
+  <p>Tarayıcı sekmelerinin karmaşasından ansızın beliren ve içinizden "ben böyle bir şeyi ne zaman açtım lan!?" diye endişelendiğiniz an. Evet sekmedeki o siteden bahsediyorum.</p>
+
+  <p>Belki bu sayfayı gördüğünüz için içiniz biraz daha rahatlamıştır. Endişe yarattığım için üzgünüm. Sadece modern web'in nimetlerinden faydalanarak sana şaka yapmak istedim.</p>
+
+  <p>Ama tabi endişeleneceğimiz daha farklı şeyler var. JavaScript ziyaret ettiğiniz web sitelerine giriş yaptığınız andan itibaren arka planda çalışır. Bu dilin çıkış amacı, belirli amaçlar doğrultusunda web sitenizi işlevsel hale getirmektedir. Fakat kullanıcılara da ciddi zararlar verebileceği de açık.</p>
+
+  <p><a href="https://disable-javascript.org">detaylar için tık tık.</a></p>
+  <p class="disablejs-hint" data-close-hint>Bu uyarıyı 3 saniye sonra kapatabilirsin.</p>
+</dialog>
+{{ with resources.Get "js/disablejs.js" }}
+<script src="{{ .RelPermalink }}" defer></script>
+{{ end }}
+{{ end }}

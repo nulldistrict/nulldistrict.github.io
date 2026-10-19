@@ -1,0 +1,35 @@
+<nav class="site-navigation" aria-label="Main navigation">
+
+    {{ range site.Menus.main }}
+        {{ if .URL }}
+        {{ $active := $.IsMenuCurrent .Menu . }}
+        <a href="{{ .URL }}"{{ if $active }} aria-current="page"{{ end }}>
+            {{- if $active }}<span class="nav-bracket" aria-hidden="true">[</span>{{ end -}}
+            {{ .Name }}
+            {{- if $active }}<span class="nav-bracket" aria-hidden="true">]</span>{{ end -}}
+        </a>
+        {{ end }}
+    {{ end }}
+
+        {{ $language := site.Language }}
+        {{ with site.Home.OutputFormats.Get "RSS" }}
+        <a href="{{ .RelPermalink }}" type="{{ .MediaType.Type }}" hreflang="{{ $language.Locale }}">
+            RSS
+        </a>
+        {{ end }}
+
+</nav>
+
+{{ if site.Params.showLanguageSwitcher }}
+{{ $translations := slice }}
+{{ range .Translations }}
+    {{ if .Site.RegularPages }}{{ $translations = $translations | append . }}{{ end }}
+{{ end }}
+{{ with $translations }}
+<nav class="language-navigation" aria-label="{{ i18n "languages" }}">
+    {{ range . }}
+        <a href="{{ .RelPermalink }}" lang="{{ .Language.Locale }}" hreflang="{{ .Language.Locale }}">{{ .Language.Label }}</a>
+    {{ end }}
+</nav>
+{{ end }}
+{{ end }}

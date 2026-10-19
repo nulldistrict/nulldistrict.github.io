@@ -1,0 +1,13 @@
+{{ define "main" }}
+{{ $host := (urls.Parse (site.Params.canonicalBaseURL | default site.BaseURL)).Host }}
+<article class="not-found" lang="{{ site.Language.Locale }}">
+  <header class="not-found-header">
+    <h1>zsh: command not found<span class="not-found-cursor" aria-hidden="true">█</span></h1>
+  </header>
+  <p class="not-found-intro">{{ i18n "notFoundIntro" }}</p>
+  <p>{{ i18n "notFoundHelp" }}</p>
+  <p>{{ i18n "searchHelp" }} <code>site:{{ $host }}</code> </p>
+  <p>{{ i18n "example" }} <a href="https://search.brave.com/search?{{ querify "q" (printf "linux site:%s" $host) "source" "web" }}"><code>linux site:{{ $host }}</code></a></p>
+  <p><a href="{{ site.Home.RelPermalink }}">{{ i18n "backHome" }}</a>.</p>
+</article>
+{{ end }}

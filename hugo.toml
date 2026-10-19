@@ -1,0 +1,126 @@
+baseURL = 'https://nulldistrict.github.io/'
+defaultContentLanguage = 'tr'
+defaultContentLanguageInSubdir = false
+title = '空值街区'
+
+theme = 'zenpunk'
+
+enableRobotsTXT = true
+
+[languages.tr]
+locale = 'tr-TR'
+label = 'Türkçe'
+weight = 1
+
+[languages.en]
+locale = 'en-US'
+label = 'English'
+weight = 2
+
+[languages.en.params]
+homeTitle = 'Netrunner Running Through Null District'
+description = "netrunner's notes from null district."
+
+[params]
+enableDisableJsDemo = true
+showLanguageSwitcher = false
+description = "netrunner's notes from null district."
+homeTitle = 'Netrunner Running Through Null District'
+author = 'Eren Kaplan'
+siteNameLatin = 'Null District'
+socialImage = 'images/social/null-district-rooftops-dither.png'
+socialImageAlt = 'Mirror’s Edge rooftop leap screenshot converted to black-and-white ordered dithering.'
+licenseName = 'CC BY-NC-SA 4.0'
+licenseURL = 'https://creativecommons.org/licenses/by-nc-sa/4.0/'
+canonicalBaseURL = 'https://nulldistrict.github.io/'
+fediverseCreator = '@ek@infosec.exchange' # Full Mastodon handle: @name@server.example
+mastodonProfile = 'https://infosec.exchange/@ek'  # Public profile URL for rel=me verification
+blueskyProfile = 'https://bsky.app/profile/erenkaplan.bsky.social'   # Public https://bsky.app/profile/... URL
+# For mirrors, keep canonicalBaseURL pointing to the primary publication.
+# When omitted, canonical URLs use baseURL.
+
+[taxonomies]
+tag = "tags"
+
+[permalinks]
+posts = "/:slug/"
+
+[[menus.main]]
+name = 'Journal'
+pageRef = '/collections/journal'
+weight = 1
+
+[[menus.main]]
+name = 'Updates'
+pageRef = '/collections/updates'
+weight = 2
+
+[[menus.main]]
+name = 'Guides'
+pageRef = '/collections/guides'
+weight = 3
+
+[[menus.main]]
+name = 'Now'
+pageRef = '/now'
+weight = 10
+
+[[menus.main]]
+name = 'Computer'
+pageRef = '/computer'
+weight = 20
+
+[[menus.main]]
+name = 'Infrastructure'
+pageRef = '/infrastructure'
+weight = 30
+
+[[menus.main]]
+name = 'EDC'
+pageRef = '/edc'
+weight = 40
+
+[[menus.main]]
+name = 'Phone'
+pageRef = '/phone'
+weight = 50
+
+[[menus.main]]
+name = 'Library'
+pageRef = '/library'
+weight = 90
+
+[[menus.main]]
+name = 'Bookmarks'
+pageRef = '/bookmarks'
+weight = 100
+
+[[menus.main]]
+name = 'Contact'
+pageRef = '/contact'
+weight = 110
+
+[[menus.main]]
+name = 'FAQ'
+pageRef = '/faq'
+weight = 120
+
+[[menus.main]]
+name = 'Support'
+pageRef = '/support'
+weight = 130
+
+[[menus.main]]
+name = 'Codeberg'
+url = 'https://codeberg.org/erenkaplan'
+weight = 140
+
+[[menus.main]]
+name = 'Sourcehut'
+url = 'https://sr.ht/~erenkaplan'
+weight = 150
+
+[[menus.main]]
+name = 'Github'
+url = 'https://github.com/nulldistrict'
+weight = 160

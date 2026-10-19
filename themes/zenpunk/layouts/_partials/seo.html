@@ -1,0 +1,104 @@
+{{- $title := printf "%s — %s" .Title site.Title -}}
+{{- if .IsHome -}}
+  {{- $title = site.Params.homeTitle | default site.Title -}}
+{{- end -}}
+{{- $description := .Description -}}
+{{- if not $description -}}
+  {{- if and .IsPage .Plain -}}
+    {{- $description = .Plain | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace | truncate 160 -}}
+  {{- else -}}
+    {{- $description = site.Params.description -}}
+  {{- end -}}
+{{- end -}}
+{{- $canonical := partial "canonical-url.html" . -}}
+{{- $root := printf "%s/" (strings.TrimRight "/" (site.Params.canonicalBaseURL | default site.BaseURL)) -}}
+{{- $profiles := slice -}}
+{{- with site.Params.mastodonProfile }}{{ $profiles = $profiles | append . }}{{ end -}}
+{{- with site.Params.blueskyProfile }}{{ $profiles = $profiles | append . }}{{ end -}}
+{{- $author := dict "@type" "Person" "@id" (printf "%s#author" $root) "name" site.Params.author "url" $root -}}
+{{- with $profiles }}{{ $author = merge $author (dict "sameAs" .) }}{{ end -}}
+{{- $language := .Params.contentLanguage | default site.Language.Locale -}}
+{{- $article := and .IsPage (eq .Section "posts") -}}
+{{- $image := "" -}}
+{{- $imageWidth := 0 -}}
+{{- $imageHeight := 0 -}}
+{{- $imageAlt := .Params.coverAlt | default .Title -}}
+{{- with .Params.cover -}}
+  {{- with $.Resources.GetMatch . -}}
+    {{- $image = .Permalink -}}
+  {{- end -}}
+{{- end -}}
+{{- if not $image -}}
+  {{- with site.Params.socialImage -}}
+    {{- with resources.Get . -}}
+      {{- $preview := . -}}
+      {{- $image = $preview.Permalink -}}
+      {{- $imageWidth = $preview.Width -}}
+      {{- $imageHeight = $preview.Height -}}
+      {{- $imageAlt = site.Params.socialImageAlt -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+<title>{{ $title }}</title>
+{{ with $description }}<meta name="description" content="{{ . }}">{{ end }}
+<link rel="canonical" href="{{ $canonical }}">
+{{ if .IsHome }}
+  {{ $website := dict "@type" "WebSite" "@id" (printf "%s#website" $root) "url" $root "name" site.Title "alternateName" (site.Params.siteNameLatin | default site.Title) "publisher" (dict "@id" (printf "%s#author" $root)) }}
+  <script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" (slice $author $website) | jsonify | safeJS }}</script>
+{{ end }}
+{{ if .IsPage }}
+  {{ with (.Params.fediverseCreator | default site.Params.fediverseCreator) }}
+  <meta name="fediverse:creator" content="{{ . }}">
+  {{ end }}
+{{ end }}
+{{ with site.Params.mastodonProfile }}<link rel="me" href="{{ . }}">{{ end }}
+{{ with site.Params.blueskyProfile }}<link rel="me" href="{{ . }}">{{ end }}
+{{ if $article }}
+  {{ with .Params.standardDocumentURI }}
+  <link rel="site.standard.document" href="{{ . | safeURL }}">
+  {{ end }}
+{{ end }}
+{{ if .IsTranslated }}
+  {{ range .AllTranslations }}
+    {{ if .Site.RegularPages }}
+    <link rel="alternate" hreflang="{{ .Language.Locale }}" href="{{ partial "canonical-url.html" . }}">
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ if or .Draft .Params.noindex (eq .Kind "404") (not .Site.RegularPages) }}<meta name="robots" content="noindex, follow">{{ end }}
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:url" content="{{ $canonical }}">
+<meta property="og:locale" content="{{ replace $language "-" "_" }}">
+<meta property="og:type" content="{{ if $article }}article{{ else }}website{{ end }}">
+{{ with $description }}<meta property="og:description" content="{{ . }}">{{ end }}
+<meta name="twitter:card" content="{{ if $image }}summary_large_image{{ else }}summary{{ end }}">
+<meta name="twitter:title" content="{{ $title }}">
+{{ with $description }}<meta name="twitter:description" content="{{ . }}">{{ end }}
+{{ with $image }}
+<meta property="og:image" content="{{ . }}">
+{{ if $imageWidth }}<meta property="og:image:width" content="{{ $imageWidth }}">{{ end }}
+{{ if $imageHeight }}<meta property="og:image:height" content="{{ $imageHeight }}">{{ end }}
+<meta property="og:image:alt" content="{{ $imageAlt }}">
+<meta name="twitter:image" content="{{ . }}">
+<meta name="twitter:image:alt" content="{{ $imageAlt }}">
+{{ end }}
+{{ if $article }}
+  {{ $data := dict "@context" "https://schema.org" "@type" "BlogPosting" "headline" .Title "url" $canonical "mainEntityOfPage" $canonical "inLanguage" $language }}
+  {{ with $description }}{{ $data = merge $data (dict "description" .) }}{{ end }}
+  {{ with (.Params.author | default site.Params.author) }}
+    {{ $data = merge $data (dict "author" (cond (eq . site.Params.author) $author (dict "@type" "Person" "name" .))) }}
+  {{ end }}
+  {{ if not .PublishDate.IsZero }}
+    {{ $published := .PublishDate.Format "2006-01-02T15:04:05Z07:00" }}
+    {{ $data = merge $data (dict "datePublished" $published) }}
+    <meta property="article:published_time" content="{{ $published }}">
+  {{ end }}
+  {{ if not .Lastmod.IsZero }}
+    {{ $modified := .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}
+    {{ $data = merge $data (dict "dateModified" $modified) }}
+    <meta property="article:modified_time" content="{{ $modified }}">
+  {{ end }}
+  {{ with $image }}{{ $data = merge $data (dict "image" (slice .)) }}{{ end }}
+  <script type="application/ld+json">{{ $data | jsonify | safeJS }}</script>
+{{ end }}

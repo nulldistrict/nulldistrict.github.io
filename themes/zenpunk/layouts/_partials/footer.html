@@ -1,0 +1,40 @@
+<footer class="site-footer">
+
+  <div class="footer-main">
+
+    <div class="footer-links">
+
+      <a href="{{ site.Params.licenseURL }}" rel="license">
+        {{ site.Params.licenseName }} · {{ now.Year }} {{ site.Params.author | default site.Title }}
+      </a>
+
+      <a href="https://keys.openpgp.org/vks/v1/by-fingerprint/60CF16C9BAF17C89C3A19D19FD261FD07D3888B7" title="PGP: 60CF 16C9 BAF1 7C89 C3A1 9D19 FD26 1FD0 7D38 88B7">60CF 16C9 --- 7D38 88B7</a>
+
+      {{ with site.GetPage "/support" }}
+      <a href="{{ .RelPermalink }}">Support this site</a>
+      {{ end }}
+
+      {{ with site.GetPage "/contact" }}
+      <a href="{{ .RelPermalink }}">Contact</a>
+      {{ end }}
+
+    </div>
+
+    <div class="footer-share">
+
+      <strong>Share this page:</strong>
+
+      {{ $qr := images.QR .Permalink }}
+
+      <img
+        src="{{ $qr.RelPermalink }}"
+        width="{{ $qr.Width }}"
+        height="{{ $qr.Height }}"
+        alt="QR code for {{ .Title }}"
+      >
+
+    </div>
+
+  </div>
+
+</footer>

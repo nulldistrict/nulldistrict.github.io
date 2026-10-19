@@ -1,0 +1,16 @@
+.DS_Store
+Thumbs.db
+
+# hugo
+/public/
+/resources/_gen/
+.hugo_stats.json
+/node_modules/
+
+
+# env and keys
+.env
+.env.*
+!.env.example
+*.key
+*pem

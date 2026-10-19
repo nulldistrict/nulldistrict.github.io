@@ -1,0 +1,64 @@
+{{ define "main" }}
+
+<section class="collection">
+
+  <h1>{{ .Title }}</h1>
+
+  {{ $collection := .Params.collection }}
+
+  {{ range (
+    where (where site.RegularPages "Section" "posts")
+    "Params.collection"
+    $collection
+  ).ByDate.Reverse }}
+
+    {{ $post := . }}
+    <article class="post-card">
+
+      <div class="post-card-header">
+
+        <h2 class="post-card-title">
+          <a href="{{ .RelPermalink }}">
+            {{ .LinkTitle }}
+          </a>
+        </h2>
+
+        <time
+          class="post-card-date"
+          datetime="{{ .Date.Format "2006-01-02" }}"
+        >
+          {{ .Date.Format "2 Jan '06" }}
+        </time>
+
+      </div>
+
+      {{ with .Resources.GetMatch .Params.cover }}
+
+        <a
+          class="post-card-image"
+          href="{{ $post.RelPermalink }}"
+        >
+          <img
+            src="{{ .RelPermalink }}"
+            alt="{{ $post.Params.coverAlt | default $post.Title }}"
+            loading="lazy"
+          >
+        </a>
+
+      {{ end }}
+
+      {{ with .Params.description }}
+
+        <p class="post-card-description">
+          {{ . }}
+        </p>
+
+      {{ end }}
+
+    </article>
+
+  {{ end }}
+
+</section>
+
+{{ end }}

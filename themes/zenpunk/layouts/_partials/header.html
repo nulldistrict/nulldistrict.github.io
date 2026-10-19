@@ -1,0 +1,12 @@
+<header class="site-header{{ if and .IsHome (not (strings.TrimSpace .Content)) }} site-header-compact{{ end }}">
+
+    <a
+        class="site-title"
+        href="{{ site.Home.RelPermalink }}"
+    >
+        {{ site.Title }}
+    </a>
+
+    {{ partial "navigation.html" . }}
+
+</header>

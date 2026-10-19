@@ -1,0 +1,8 @@
+{{- $url := .Permalink -}}
+{{- with .Site.Params.canonicalBaseURL -}}
+  {{- $base := urls.Parse $.Site.BaseURL -}}
+  {{- $page := urls.Parse $.Permalink -}}
+  {{- $path := strings.TrimPrefix $base.Path $page.Path -}}
+  {{- $url = printf "%s/%s" (strings.TrimRight "/" .) (strings.TrimLeft "/" $path) -}}
+{{- end -}}
+{{- return $url -}}

@@ -397,7 +397,7 @@ main {
 }
 
 /* The footer QR stays in its original colors. */
-.home .footer-share img {
+.home .page-qr img {
     filter: none;
 }
 
@@ -927,18 +927,18 @@ details > *:not(summary) {
     font-weight: 600;
 }
 
-.footer-share {
+.page-qr {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 0.4rem;
 }
 
-.footer-share strong {
+.page-qr strong {
     font-weight: 600;
 }
 
-.footer-share img {
+.page-qr img {
     display: block;
     width: 120px;
     height: 120px;
@@ -1058,7 +1058,7 @@ table {
         gap: 1rem;
     }
 
-    .footer-share img {
+    .page-qr img {
         width: 96px;
         height: 96px;
     }
